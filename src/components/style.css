@@ -1,0 +1,148 @@
+
+header {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+}
+
+.input-boxx{
+    width: 100%;
+}
+
+.content{
+    font-family: 'Poor Story', system-ui;
+}
+
+.todo-head{
+    font-family: 'Protest Revolution', sans-serif;
+}
+.item-list-h4{
+    font-family: 'Single Day', cursive;
+}
+.input-box-font{
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: bolder !important;
+}
+.btn-color{
+    color: white !important;
+    font-weight: bold;
+
+}
+
+
+.btn-1 {
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(96, 149, 129, 1) 0%, rgba(228, 219, 37, 0.927608543417367) 57%);
+    color:black !important;
+    font-weight: 500 !important;
+}
+.btn-2 {
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(96, 149, 129, 1) 0%, rgba(236, 132, 91, 0.927608543417367) 57%);
+    color:black !important;
+    font-weight: 500 !important;
+}
+.btn-3 {
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    color:black !important;
+    font-weight: 500 !important;
+}
+.btnAll{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 4px;
+    border-radius: 4px !important;
+}
+
+.hover-input{
+    margin: 10px;
+    margin-right: 2px;
+}
+
+.input-group-font{
+    font-family: 'Exo 2', sans-serif;
+    font-weight: bold !important;
+}
+
+.input-group-font:hover{
+    background-color: rgb(252, 211, 134);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .glow-on-hover { */
+    /* width: 220px;
+    height: 50px; */
+    /* border: none; */
+    /* outline: none; */
+    /* color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0; */
+    /* border-radius: 10px; */
+/* } */
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
+
