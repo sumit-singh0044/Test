@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import Listitem from "./Listitem";
 
@@ -9,7 +9,6 @@ const Contents = () => {
   const [done, setDone] = useState(0);
   const [item, setItem] = useState(initial);
 
-
   const handleChange = (e) => {
     setItem(e.target.value);
   };
@@ -17,21 +16,33 @@ const Contents = () => {
   const handleClick = (e) => {
     e.preventDefault();
     if (item.trim() !== "") {
-      setList([...list, item]);
+      setList([...list, { text: item, completed: false }]);
       setNum(num + 1);
       setItem(initial);
     }
   };
 
-  const handleClickInput = () => {
-    setDone(done + 1);
+  const handleClickInput = (index) => {
+    const updatedList = [...list];
+    updatedList[index].completed = !updatedList[index].completed;
+    setList(updatedList);
+   
+    setDone(done + (updatedList[index].completed ? 1 : -1));
   };
 
   const handleDeleteItem = (index) => {
-    const updatedList = list.filter((_, idx) => idx !== index);
+    const updatedList = [...list];
+    if (updatedList[index].completed) {
+      setDone(done - 1);
+    }
+    updatedList.splice(index, 1);
     setList(updatedList);
-    setNum(num - 1); 
+    setNum(num - 1);
   };
+
+  useEffect(() => {
+    console.log(list);
+  }, [list]);
 
   return (
     <>
@@ -63,12 +74,13 @@ const Contents = () => {
       </div>
 
       <div className="todo-list-items">
-        {list.map((ListItem) => (
+        {list.map((ListItem, index) => (
           <Listitem
-            key={ListItem}
-            ListItems={ListItem}
-            handleClickInput={handleClickInput}
-            handleDeleteItem={handleDeleteItem}
+            key={index}
+            ListItem={ListItem.text}
+            completed={ListItem.completed}
+            handleClickInput={() => handleClickInput(index)}
+            handleDeleteItem={() => handleDeleteItem(index)}
           />
         ))}
       </div>

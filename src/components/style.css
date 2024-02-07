@@ -65,7 +65,17 @@ header {
     background-color: rgb(252, 211, 134);
 }
 
-
+.list-item{
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    justify-content: space-between;
+    border: 2px solid black;
+}
+.list-item p{
+   padding: 5px;
+   display: block;
+}
 
 
 
