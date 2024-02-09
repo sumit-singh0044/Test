@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './components/Header'
 import Contents from './components/Contents';
 import './App.css'
+import Footer from './components/Footer';
 
 const App = () => {
   return (
@@ -13,6 +14,9 @@ const App = () => {
 
         <div className="content">
           <Contents />
+        </div>
+        <div>
+          <Footer/>
         </div>
       </div>
     </>

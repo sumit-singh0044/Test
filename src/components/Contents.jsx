@@ -16,7 +16,7 @@ const Contents = () => {
   const handleClick = (e) => {
     e.preventDefault();
     if (item.trim() !== "") {
-      setList([...list, { text: item, completed: false }]);
+      setList([...list, { text: item, completed: false, time: new Date() }]);
       setNum(num + 1);
       setItem(initial);
     }
@@ -26,7 +26,7 @@ const Contents = () => {
     const updatedList = [...list];
     updatedList[index].completed = !updatedList[index].completed;
     setList(updatedList);
-   
+
     setDone(done + (updatedList[index].completed ? 1 : -1));
   };
 
@@ -39,6 +39,65 @@ const Contents = () => {
     setList(updatedList);
     setNum(num - 1);
   };
+
+  const moveItemUp = (index) => {
+    if (index > 0 && index < list.length) {
+      const updatedItems = [...list];
+      const currentItem = updatedItems[index];
+      updatedItems[index] = updatedItems[index - 1];
+      updatedItems[index - 1] = currentItem;
+      setList(updatedItems);
+    }
+  };
+
+  const moveItemDown = (index) => {
+    if (index >= 0 && index < list.length - 1) {
+      const updatedList = [...list];
+      const currentItem = updatedList[index];
+      updatedList[index] = updatedList[index + 1];
+      updatedList[index + 1] = currentItem;
+      setList(updatedList);
+    }
+  };
+
+  const resetList = () => {
+    setList([]);
+    setDone(0);
+    setNum(0);
+  };
+  const handleDoubleClick = (index) => {
+    if (index > 0 && index < list.length) {
+      const updatedList = [...list];
+      const pinnedItem = updatedList[index];
+      updatedList.splice(index, 1);
+      updatedList.unshift(pinnedItem);
+      setList(updatedList);
+    }
+  };
+  const handleKey = (e) => {
+    console.log("Key pressed:", e.key);
+    if (e.key === "Enter") handleClick(e);
+  };
+
+  const [clicks,setClicks]=useState(true);
+  const buttonName = (index) => {
+        if (!clicks) {
+          const time = list[index].time;
+          const dateTime = new Date(time);
+          const day = dateTime.getDate().toString().padStart(2, "0");
+          const month = (dateTime.getMonth() + 1).toString().padStart(2, "0");
+          const year = dateTime.getFullYear();
+          const hours = dateTime.getHours().toString().padStart(2, "0");
+          const minutes = dateTime.getMinutes().toString().padStart(2, "0");
+          const formattedTime = `${day}/${month}/${year} ${hours}:${minutes}`;
+          return formattedTime;
+        }
+        return "Show Time";
+  };
+  const toggleClicks = () => {
+    setClicks(!clicks);
+  };
+
 
   useEffect(() => {
     console.log(list);
@@ -56,14 +115,15 @@ const Contents = () => {
           name="items"
           value={item}
           onChange={handleChange}
+          onKeyDown={handleKey}
         />
         <button
-          className="btn btn-outline-secondary btn-info btn-color glow-on-hover"
+          className="btn btn-outline-secondary btn-info button-1 "
           type="button"
           id="button-addon2"
           onClick={handleClick}
         >
-          Add Item
+          <i class="fa-solid fa-plus"></i>
         </button>
       </div>
 
@@ -81,8 +141,23 @@ const Contents = () => {
             completed={ListItem.completed}
             handleClickInput={() => handleClickInput(index)}
             handleDeleteItem={() => handleDeleteItem(index)}
+            moveItemUp={() => moveItemUp(index)}
+            moveItemDown={() => moveItemDown(index)}
+            handleDoubleClick={() => handleDoubleClick(index)}
+            buttonName={() => buttonName(index)}
+            clicks={clicks}
+            toggleClicks={toggleClicks}
           />
         ))}
+      </div>
+      <br />
+      <div className="reset">
+        <button
+          className="btn glow-on-hover btn-reset btn-color"
+          onClick={() => resetList()}
+        >
+          <i class="fa-solid fa-trash"></i>
+        </button>
       </div>
     </>
   );
