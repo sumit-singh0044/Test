@@ -9,29 +9,12 @@ const Listitem = ({
   moveItemUp,
   moveItemDown,
   handleDoubleClick,
-  clicks,
   buttonName,
   toggleClicks,
 }) => {
   return (
     <>
-      <div
-        // className={`list-item ${completed ? "completed" : ""}`}
-        className="list-item"
-        onClick={handleClickInput}
-      >
-        {/* <p>{ListItem}</p>
-        <button>Up</button>
-        <button>Down</button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleDeleteItem();
-          }}
-        >
-          Delete
-        </button> */}
-
+      <div className="list-item" onClick={handleClickInput}>
         <div className="input-group">
           <input
             type="text"
@@ -47,12 +30,17 @@ const Listitem = ({
             aria-label="Recipient's username with two button addons"
             readOnly
           />
-          {/* <button
+
+           <button
             className="btn btn-outline-secondary btn-1"
-            onClick={toggleClicks}
+            onClick={(e)=>{
+              e.stopPropagation()
+              toggleClicks();
+            }}
           >
-            {clicks ? <i class="fa-regular fa-clock"></i> : buttonName()}
-          </button> */}
+            { buttonName()}
+          </button> 
+
           <button
             className="btn btn-outline-secondary btn-1 btnnn "
             type="button"
@@ -81,7 +69,7 @@ const Listitem = ({
               handleDeleteItem();
             }}
           >
-            <i class="fa-solid fa-delete-left"></i>
+            <i className="fa-solid fa-delete-left"></i>
           </button>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./style.css";
 import Listitem from "./Listitem";
 
@@ -16,7 +16,10 @@ const Contents = () => {
   const handleClick = (e) => {
     e.preventDefault();
     if (item.trim() !== "") {
-      setList([...list, { text: item, completed: false, time: new Date() }]);
+      setList([
+        ...list,
+        { text: item, completed: false, time: new Date(), clicks: false },
+      ]);
       setNum(num + 1);
       setItem(initial);
     }
@@ -26,7 +29,6 @@ const Contents = () => {
     const updatedList = [...list];
     updatedList[index].completed = !updatedList[index].completed;
     setList(updatedList);
-
     setDone(done + (updatedList[index].completed ? 1 : -1));
   };
 
@@ -65,6 +67,7 @@ const Contents = () => {
     setDone(0);
     setNum(0);
   };
+
   const handleDoubleClick = (index) => {
     if (index > 0 && index < list.length) {
       const updatedList = [...list];
@@ -74,34 +77,33 @@ const Contents = () => {
       setList(updatedList);
     }
   };
+
   const handleKey = (e) => {
     console.log("Key pressed:", e.key);
     if (e.key === "Enter") handleClick(e);
   };
 
-  const [clicks,setClicks]=useState(true);
   const buttonName = (index) => {
-        if (!clicks) {
-          const time = list[index].time;
-          const dateTime = new Date(time);
-          const day = dateTime.getDate().toString().padStart(2, "0");
-          const month = (dateTime.getMonth() + 1).toString().padStart(2, "0");
-          const year = dateTime.getFullYear();
-          const hours = dateTime.getHours().toString().padStart(2, "0");
-          const minutes = dateTime.getMinutes().toString().padStart(2, "0");
-          const formattedTime = `${day}/${month}/${year} ${hours}:${minutes}`;
-          return formattedTime;
-        }
-        return "Show Time";
-  };
-  const toggleClicks = () => {
-    setClicks(!clicks);
+    const time = list[index].time;
+    const dateTime = new Date(time);
+    const day = dateTime.getDate().toString().padStart(2, "0");
+    const month = (dateTime.getMonth() + 1).toString().padStart(2, "0");
+    const year = dateTime.getFullYear();
+    const hours = dateTime.getHours().toString().padStart(2, "0");
+    const minutes = dateTime.getMinutes().toString().padStart(2, "0");
+    const formattedTime = `${day}/${month}/${year} ${hours}:${minutes}`;
+    return list[index].clicks ? (
+      formattedTime
+    ) : (
+      <i class="fa-regular fa-clock"></i>
+    );
   };
 
-
-  useEffect(() => {
-    console.log(list);
-  }, [list]);
+  const toggleClicks = (index) => {
+    const updatedList = [...list];
+    updatedList[index].clicks = !updatedList[index].clicks;
+    setList(updatedList);
+  };
 
   return (
     <>
@@ -123,7 +125,7 @@ const Contents = () => {
           id="button-addon2"
           onClick={handleClick}
         >
-          <i class="fa-solid fa-plus"></i>
+          <i className="fa-solid fa-plus"></i>
         </button>
       </div>
 
@@ -145,8 +147,7 @@ const Contents = () => {
             moveItemDown={() => moveItemDown(index)}
             handleDoubleClick={() => handleDoubleClick(index)}
             buttonName={() => buttonName(index)}
-            clicks={clicks}
-            toggleClicks={toggleClicks}
+            toggleClicks={() => toggleClicks(index)}
           />
         ))}
       </div>
@@ -156,7 +157,7 @@ const Contents = () => {
           className="btn glow-on-hover btn-reset btn-color"
           onClick={() => resetList()}
         >
-          <i class="fa-solid fa-trash"></i>
+          <i className="fa-solid fa-trash"></i>
         </button>
       </div>
     </>
