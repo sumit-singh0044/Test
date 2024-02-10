@@ -1,5 +1,5 @@
 First step towards learning React
-e-todo-list.netlify.app
+https://e-todo-list.netlify.app/
 
 # React + Vite
 
