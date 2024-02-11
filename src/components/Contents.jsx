@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import Listitem from "./Listitem";
 
@@ -8,6 +8,7 @@ const Contents = () => {
   const [num, setNum] = useState(0);
   const [done, setDone] = useState(0);
   const [item, setItem] = useState(initial);
+  const [count, setCount] = useState(0);
 
   const handleChange = (e) => {
     setItem(e.target.value);
@@ -63,6 +64,7 @@ const Contents = () => {
   };
 
   const resetList = () => {
+    if (list.length === 0) alert("Add some Items");
     setList([]);
     setDone(0);
     setNum(0);
@@ -95,13 +97,36 @@ const Contents = () => {
     return list[index].clicks ? (
       formattedTime
     ) : (
-      <i class="fa-regular fa-clock"></i>
+      <i className="fa-regular fa-clock"></i>
     );
   };
 
   const toggleClicks = (index) => {
     const updatedList = [...list];
     updatedList[index].clicks = !updatedList[index].clicks;
+    setList(updatedList);
+  };
+
+  const sortData = (n) => {
+    if (list.length === 0) {
+      alert("Add some Items");
+      return;
+    }
+
+    let updatedList = [...list];
+    switch (n) {
+      case 1:
+        updatedList.sort((a, b) => a.text.localeCompare(b.text));
+        break;
+      case 2:
+        updatedList.sort((a, b) => b.text.localeCompare(a.text));
+        break;
+      case 3:
+        updatedList.sort((a, b) => b.time - a.time);
+        break;
+      default:
+        break;
+    }
     setList(updatedList);
   };
 
@@ -158,6 +183,27 @@ const Contents = () => {
           onClick={() => resetList()}
         >
           <i className="fa-solid fa-trash"></i>
+        </button>
+
+        <button
+          className="btn glow-on-hover btn-reset btn-color"
+          onClick={() => sortData(1)}
+        >
+          <i className="fa-solid fa-arrow-up-a-z"></i>
+        </button>
+
+        <button
+          className="btn glow-on-hover btn-reset btn-color"
+          onClick={() => sortData(2)}
+        >
+          <i className="fa-solid fa-arrow-up-z-a"></i>
+        </button>
+
+        <button
+          className="btn glow-on-hover btn-reset btn-color"
+          onClick={() => sortData(3)}
+        >
+          <i className="fa-solid fa-arrow-up-9-1"></i>
         </button>
       </div>
     </>
